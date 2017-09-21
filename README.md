@@ -1,3 +1,6 @@
+SEE https://github.com/Adavo/cordova-plugin-media
+Adapt to new code
+
 ---
 title: Media
 description: Record and play audio on the device.
