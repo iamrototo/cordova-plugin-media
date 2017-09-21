@@ -70,6 +70,13 @@ Media.get = function(id) {
 };
 
 /**
+ * Get binary recording audio file.
+ */
+Media.prototype.getBinRecordAudio = function(success, fail) {
+	exec(success, fail, "Media", "getBinRecordAudio", [this.id]);
+};
+
+/**
  * Start or resume playing audio file.
  */
 Media.prototype.play = function(options) {
