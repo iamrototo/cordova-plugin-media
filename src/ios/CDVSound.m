@@ -39,9 +39,10 @@
     // first check for correct extension
     NSString* ext=[resourcePath pathExtension];
     if ([ext caseInsensitiveCompare:@"wav"] != NSOrderedSame &&
-        [ext caseInsensitiveCompare:@"m4a"] != NSOrderedSame) {
+        [ext caseInsensitiveCompare:@"m4a"] != NSOrderedSame &&
+        [ext caseInsensitiveCompare:@"mp4"] != NSOrderedSame) {
         resourceURL = nil;
-        NSLog(@"Resource for recording must have wav or m4a extension");
+        NSLog(@"Resource for recording must have wav or m4a or mp4 extension");
     } else if ([resourcePath hasPrefix:DOCUMENTS_SCHEME_PREFIX]) {
         // try to find Documents:// resources
         filePath = [resourcePath stringByReplacingOccurrencesOfString:DOCUMENTS_SCHEME_PREFIX withString:[NSString stringWithFormat:@"%@/", docsPath]];
