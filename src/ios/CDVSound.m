@@ -816,6 +816,26 @@
     NSLog(@"Stalled playback");
 }
 
+- (void)getBinRecordAudio:(CDVInvokedUrlCommand*)command
+{
+	NSString* callbackId = command.callbackId;
+	NSString* mediaId = [command argumentAtIndex:0];
+	
+#pragma unused(mediaId)
+	CDVAudioFile* audioFile = [[self soundCache] objectForKey:mediaId];
+	double position = -1;
+	
+	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL:audioFile.resourceURL error: nil];
+	NSData *nsdata = [readHandle readDataToEndOfFile];
+	NSString *base64Data  = [[NSString alloc] initWithData:[nsdata base64EncodedDataWithOptions:0] encoding:NSASCIIStringEncoding];
+	
+	CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:base64Data];
+	
+	NSString* jsString = [NSString stringWithFormat:@"%@(\"%@\",%d,%.3f);", @"cordova.require('cordova-plugin-media.Media').onStatus", mediaId, MEDIA_POSITION, position];
+	[self.commandDelegate evalJs:jsString];
+	[self.commandDelegate sendPluginResult:result callbackId:callbackId];
+}
+
 - (void)onMemoryWarning
 {
     [[self soundCache] removeAllObjects];
