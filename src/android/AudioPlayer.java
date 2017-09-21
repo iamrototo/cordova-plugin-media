@@ -151,7 +151,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
             this.audioFile = file;
             this.recorder = new MediaRecorder();
             this.recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            this.recorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS); // RAW_AMR);
+            this.recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4); // encode to MPEG_4);
             this.recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC); //AMR_NB);
             this.tempFile = generateTempFile();
             this.recorder.setOutputFile(this.tempFile);
@@ -174,6 +174,28 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
         }
     }
 
+       /**
+ * Get bin of the recorded file encoded into a base 64 object
+ */
+public String getBinRecordAudio() {
+	try {
+		String filePath = this.audioFile;
+		if (!filePath.startsWith("/")) {
+			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+				filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + filePath;
+			} else {
+				filePath = "/data/data/" + handler.cordova.getActivity().getPackageName() + "/cache/" + filePath;
+			}
+		}
+		Log.d(LOG_TAG, "Get binary data of the file :" + filePath);
+		return android.util.Base64.encodeToString(FileHelper.readFile(filePath), android.util.Base64.DEFAULT);
+	}
+	catch (Exception e) {
+            e.printStackTrace();
+			return null;
+    }
+}
+       
     /**
      * Save temporary recorded file to specified name
      *
