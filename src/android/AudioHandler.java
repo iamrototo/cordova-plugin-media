@@ -171,6 +171,10 @@ public class AudioHandler extends CordovaPlugin {
             callbackContext.sendPluginResult(new PluginResult(status, b));
             return true;
         }
+           else if (action.equals("getBinRecordAudio")) {
+        String data = this.getBinRecordAudio(args.getString(0));
+		callbackContext.sendPluginResult(new PluginResult(status, data));
+	}
         else if (action.equals("messageChannel")) {
             messageChannel = callbackContext;
             return true;
