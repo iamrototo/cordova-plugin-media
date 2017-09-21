@@ -201,6 +201,15 @@ public class AudioHandler extends CordovaPlugin {
         this.players.clear();
     }
 
+       /**
+ * get binary data of the audio file encoded into base64 object
+ * @param id				The id of the audio player
+ */
+public String getBinRecordAudio(String id) {
+    AudioPlayer audio = this.players.get(id);
+    return audio.getBinRecordAudio();
+}
+       
     /**
      * Stop all audio players and recorders on navigate.
      */
