@@ -19,6 +19,7 @@
 package org.apache.cordova.media;
 
 import android.net.Uri;
+import java.io.*;
 
 public class FileHelper {
 
